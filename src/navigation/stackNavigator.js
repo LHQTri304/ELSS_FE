@@ -10,6 +10,8 @@ import {
   UserProfile,
   ResetPasswordInProfile,
   SettingProfile,
+  Friends,
+  GroupChat,
 } from '../screens';
 import MainBottomTab from './MainBottomTab';
 
@@ -37,6 +39,9 @@ export default function StackNavigator() {
           component={ResetPasswordInProfile}
         />
         <Stack.Screen name="SettingProfile" component={SettingProfile} />
+
+        <Stack.Screen name="Friends" component={Friends} />
+        <Stack.Screen name="GroupChat" component={GroupChat} />
       </Stack.Navigator>
     </NavigationContainer>
   );

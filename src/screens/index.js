@@ -10,6 +10,12 @@ import UserProfile from "./UserProfile/UserProfile";
 import ResetPasswordInProfile from "./UserProfile/ResetPasswordInProfile";
 import SettingProfile from "./UserProfile/SettingProfile";
 
+//Friends
+import Friends from "./Friends/Friends";
+
+//GroupChat
+import GroupChat from "./GroupChat/GroupChat";
+
 
 export {
   Login,
@@ -21,4 +27,8 @@ export {
   UserProfile,
   ResetPasswordInProfile,
   SettingProfile,
+  //
+  Friends,
+  //
+  GroupChat,
 };

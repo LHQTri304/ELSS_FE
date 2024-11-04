@@ -91,32 +91,32 @@ import {
 import {images, icons, colors, fontSizes} from '../constants';
 import {Icon} from '../components';
 import * as Animatable from 'react-native-animatable';
-import {UserProfile, ResetPasswordInProfile, SettingProfile} from '../screens';
+import {UserProfile, Friends, GroupChat} from '../screens';
 
 const TabArr = [
   {
     route: 'Groups',
     label: 'Groups',
     icon: icons.groupIcon,
-    component: UserProfile,
-    color: 'lime',
-    alphaClr: null,
+    component: GroupChat,
+    color: colors.PrimaryBackground,
+    alphaClr: colors.SecondaryBackground,
   },
   {
     route: 'Chat',
     label: 'Chat',
     icon: icons.activeChatMessageIcon,
-    component: UserProfile,
-    color: 'gold',
-    alphaClr: null,
+    component: Friends,
+    color: colors.PrimaryBackground,
+    alphaClr: colors.SecondaryBackground,
   },
   {
     route: 'Account',
     label: 'Account',
     icon: icons.personIcon,
     component: UserProfile,
-    color: 'purple',
-    alphaClr: null,
+    color: colors.PrimaryBackground,
+    alphaClr: colors.SecondaryBackground,
   },
 ];
 
@@ -130,8 +130,8 @@ const TabButton = props => {
 
   useEffect(() => {
     if (focused) {
-      viewRef.current.animate({0: {scale: 0}, 1: {scale: 1}});
-      textViewRef.current.animate({0: {scale: 0}, 1: {scale: 1}});
+      viewRef.current.animate({0: {scale: 0}, 1: {scale: 1.1}});
+      textViewRef.current.animate({0: {scale: 0}, 1: {scale: 1.2}});
     } else {
       viewRef.current.animate({0: {scale: 1}, 1: {scale: 0}});
       textViewRef.current.animate({0: {scale: 1}, 1: {scale: 0}});
@@ -142,7 +142,7 @@ const TabButton = props => {
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={1}
-      style={[styles.container, {flex: focused ? 1 : 0.65}]}>
+      style={[styles.tabButtonContainer, {flex: focused ? 1 : 0.65}]}>
       <View>
         <Animatable.View
           ref={viewRef}
@@ -159,7 +159,9 @@ const TabButton = props => {
           <Icon
             name={item.icon}
             size={20}
-            color={focused ? colors.SecondaryBackground : colors.PrimaryBackground}
+            color={
+              focused ? colors.SecondaryBackground : colors.PrimaryBackground
+            }
           />
           <Animatable.View ref={textViewRef}>
             {focused && (
@@ -178,7 +180,7 @@ const TabButton = props => {
   );
 };
 
-export default function AnimTab3() {
+export default function MainBottomTab() {
   return (
     <SafeAreaView style={{flex: 1}}>
       <Tab.Navigator
@@ -210,7 +212,7 @@ export default function AnimTab3() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  tabButtonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     height: '99%',

@@ -80,4 +80,4 @@ To learn more about React Native, take a look at the following resources:
 
 
 
-yarn add @react-navigation/native @react-navigation/native-stack @react-native-async-storage/async-storage react-native-screens @joaosousa/react-native-progress-steps react-native-progress-steps axios @react-navigation/material-top-tabs react-native-tab-view @react-navigation/bottom-tabs @react-navigation/material-bottom-tabs@react-navigation/material-bottom-tabs react-native-paper react-native-vector-icons react-native-safe-area-context @react-native-masked-view/masked-view @react-navigation/elements react-native-animatable
+yarn add @react-navigation/native @react-navigation/native-stack @react-native-async-storage/async-storage react-native-screens @joaosousa/react-native-progress-steps react-native-progress-steps axios @react-navigation/material-top-tabs react-native-tab-view @react-navigation/bottom-tabs @react-navigation/material-bottom-tabs @react-navigation/material-bottom-tabs react-native-paper react-native-vector-icons react-native-safe-area-context @react-native-masked-view/masked-view @react-navigation/elements react-native-animatable react-native-pager-view
