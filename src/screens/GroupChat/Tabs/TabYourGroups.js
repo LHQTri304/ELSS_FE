@@ -24,12 +24,14 @@ import {
   information_getAllTopics,
 } from "../../../api";
 
+import { dataGroups } from "../../../testFE";
+
 export default function TabYourGroups(props) {
   //navigation to/back
   const { navigate, goBack } = props.navigation;
 
   //initialization
-  const [groups, setGroups] = useState([]);
+  const [groups, setGroups] = useState(dataGroups);
   const [searchText, setSearchText] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 

@@ -44,7 +44,6 @@ function TabYourFriends(props) {
     <View style={styles.container}>
       <FlatList
         data={friends}
-        numColumns={3}
         renderItem={({ item, index }) => (
           <TabYourFriendsItems
             friend={item}

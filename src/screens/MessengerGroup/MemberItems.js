@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "black",
     borderWidth: 1,
-    backgroundColor: colors.ShadowedItems,
   },
   avatarImage: {
     width: 65,

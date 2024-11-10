@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "black",
     borderWidth: 1,
-    backgroundColor: colors.ShadowedItems,
   },
   topView: {
     flexDirection: "row",

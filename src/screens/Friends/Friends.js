@@ -128,7 +128,7 @@ export default function Friends() {
 }
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {flex: 1, paddingBottom: '17%',},
   displayView: {flex: 1, backgroundColor: colors.GrayBackground},
   tabContainer: {
     flexDirection: 'row',

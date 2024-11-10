@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
     borderColor: colors.inactive,
     borderWidth: 1,
     elevation: 5,
-    backgroundColor: colors.ShadowedItems,
   },
   avatarImage: {
     width: 65,
