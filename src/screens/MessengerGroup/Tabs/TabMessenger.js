@@ -3,22 +3,24 @@ import { View, FlatList, StyleSheet } from "react-native";
 import { EnterMessageBar, MessengerItems } from "../../../components";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { API_BASE_URL } from "../../../api/DomainAPI";
-import SockJS from "sockjs-client";
+//import SockJS from "sockjs-client";
 import { over } from "stompjs";
 import {
   messenger_loadMessageInGroup,
   messenger_receiveMessage,
 } from "../../../api";
 
+import { dataFriends } from "../../../testFE";
+
 function TabMessenger(props) {
-  const { navigate } = props.navigation;
+  //const { navigate } = props.navigation;
 
-  const [chatHistory, setChatHistory] = useState([]);
-  const [socket, setSocket] = useState(new SockJS(API_BASE_URL + "/ws"));
+  const [chatHistory, setChatHistory] = useState(dataFriends);
+  //const [socket, setSocket] = useState(new SockJS(API_BASE_URL + "/ws"));
 
-  let stompClient = over(socket);
+  //let stompClient = over(socket);
 
-  const fetchData = async () => {
+  /* const fetchData = async () => {
     stompClient.connect({}, onConnected, onError);
     const chatData = await messenger_loadMessageInGroup();
     setChatHistory(chatData);
@@ -32,13 +34,13 @@ function TabMessenger(props) {
     // }, 1000);
     // return () => clearInterval(intervalId);
     fetchData();
-  }, [props.userName]);
+  }, [props.userName]); */
 
   const onConnected = async () => {
-    stompClient.subscribe(
+    /* stompClient.subscribe(
       "/user/public/queue/chat/" + (await AsyncStorage.getItem("groupID")),
       onReceivedMessage
-    );
+    ); */
   };
 
   const onError = async () => {
@@ -46,8 +48,8 @@ function TabMessenger(props) {
   };
 
   const onReceivedMessage = async () => {
-    const chatData = await messenger_receiveMessage();
-    setChatHistory(chatData);
+    /* const chatData = await messenger_receiveMessage();
+    setChatHistory(chatData); */
   };
 
   return (
@@ -61,12 +63,15 @@ function TabMessenger(props) {
             kind={"group"}
             item={item}
             files={item.files}
-            navigate={navigate}
+            //navigate={navigate}
           />
         )}
       />
 
-      <EnterMessageBar stompClient={stompClient} actionType={"group"} />
+      <EnterMessageBar 
+        //stompClient={stompClient} 
+        //actionType={"group"} 
+        />
     </View>
   );
 }

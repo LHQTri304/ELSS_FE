@@ -22,7 +22,7 @@ export const user_register = async (username, password, email, rePassword) => {
 export const user_checkInfo = async (username, password, email, rePassword) => {
   if (!email.endsWith("@gmail.com")) {
     if (!email.endsWith("@gm.uit.edu.vn")) {
-      alert("Định dạng email không đúng");
+      alert(`Định dạng email không đúng\nemail:${email}`);
       return false;
     }
   }

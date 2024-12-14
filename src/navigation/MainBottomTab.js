@@ -10,12 +10,20 @@ import {
 import {images, icons, colors, fontSizes} from '../constants';
 import {Icon} from '../components';
 import * as Animatable from 'react-native-animatable';
-import {UserProfile, Friends, GroupChat} from '../screens';
+import {UserProfile, Friends, GroupChat, AllNotification, GameTab} from '../screens';
 
 const TabArr = [
+  /* {
+    route: 'Account',
+    label: 'User',
+    icon: icons.personIcon,
+    component: UserProfile,
+    color: colors.PrimaryBackground,
+    alphaClr: colors.SecondaryBackground,
+  },
   {
     route: 'Groups',
-    label: 'Groups',
+    label: 'Nhóm',
     icon: icons.groupIcon,
     component: GroupChat,
     color: colors.PrimaryBackground,
@@ -23,20 +31,28 @@ const TabArr = [
   },
   {
     route: 'Chat',
-    label: 'Chat',
+    label: 'Bạn Bè',
     icon: icons.activeChatMessageIcon,
     component: Friends,
     color: colors.PrimaryBackground,
     alphaClr: colors.SecondaryBackground,
-  },
+  }, */
   {
-    route: 'Account',
-    label: 'Account',
-    icon: icons.personIcon,
-    component: UserProfile,
+    route: 'Game',
+    label: 'Game',
+    icon: icons.review5,
+    component: GameTab,
     color: colors.PrimaryBackground,
     alphaClr: colors.SecondaryBackground,
   },
+  /* {
+    route: 'AllNotification',
+    label: 'Thông Báo',
+    icon: icons.activeBellAlarm,
+    component: AllNotification,
+    color: colors.PrimaryBackground,
+    alphaClr: colors.SecondaryBackground,
+  }, */
 ];
 
 const Tab = createBottomTabNavigator();

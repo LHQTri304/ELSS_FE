@@ -43,6 +43,7 @@ export const TextInputTransparent = ({
   placeholder,
   isPassword,
   onChangeText,
+  value,
   style,
 }) => (
   <View style={styles.container}>
@@ -54,6 +55,7 @@ export const TextInputTransparent = ({
       placeholder={placeholder}
       placeholderTextColor={colors.noImportantText}
       onChangeText={onChangeText}
+      value={value}
     />
   </View>
 );

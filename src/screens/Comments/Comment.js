@@ -15,16 +15,18 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { API_BASE_URL } from "../../api/DomainAPI";
 
+import { dataBlogs } from "../../testFE";
+
 const Comment = (props) => {
 
-  const { blogID } = props.route.params;
+  const { blogID } = props/* .route.params */;
 
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(dataBlogs.filter(blog => blog.ID === blogID)[0].comments);
 
   //navigation
   const { navigate, goBack } = props.navigation;
 
-  useEffect(() => {
+  /* useEffect(() => {
     const fetchData = async () => {
       try {
 
@@ -48,11 +50,11 @@ const Comment = (props) => {
 
     // // Hủy interval khi component bị unmounted
      return () => clearInterval(intervalId);
-  }, [props.userName]);
+  }, [props.userName]); */
 
   return (
     <View style={styles.container}>
-      <UIHeader
+      {/* <UIHeader
         title={"Bình luận trên bài đăng"}
         leftIconName={icons.backIcon}
         rightIconName={null}
@@ -61,13 +63,13 @@ const Comment = (props) => {
         }}
         onPressRightIcon={null}
         textStyle={{fontSize: fontSizes.h4*0.96}}
-      />
+      /> */}
 
       <ScrollView style={styles.listContainer}>
         {comments.map((eachComment) => (
           <CommentItems
             comment={eachComment}
-            key={eachComment.commentID}
+            //key={eachComment.commentID}
             onPress={() => {
               navigate("Reply", { comment: eachComment });
             }}

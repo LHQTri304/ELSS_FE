@@ -4,7 +4,16 @@ import { images, icons, colors, fontSizes } from "../../constants";
 
 export default function ReplyItems(props) {
   const { navigate } = props;
-  const { userReplied, dateReplied, content, files } = props.reply;
+  //const { userReplied, dateReplied, content, files } = props.reply;
+
+  //
+  const [dateReply, setD] = useState(props.reply.dateComment);
+  const [img, setI] = useState(props.reply.img);
+  const [name, setN] = useState(props.reply.userName);
+  const [content, setCD] = useState(props.reply.content);
+  const [files, setFF] = useState([]);
+  //
+  console.log(props.reply)
 
   const MAXWidth = 245;
   const getWidth = (baseWidth) => {
@@ -15,32 +24,32 @@ export default function ReplyItems(props) {
 
   }
 
-  const getTime = () => {
+  /* const getTime = () => {
     const date = new Date(dateReplied);
     return `${date.getHours()}:${date.getMinutes()} \n ${date.getDate()}/${
       date.getMonth() + 1
     }`;
-  };
+  }; */
 
-  const ShowProfile = async () => {
+  /* const ShowProfile = async () => {
     navigate("ShowProfile", { userReplied: userReplied });
   };
 
   const handleShowPicture = () => {
     navigate("ShowPicture", { files: files });
-  };
+  }; */
 
   return (
-    <TouchableOpacity style={styles.container} onPress={ShowProfile}>
+    <TouchableOpacity style={styles.container} /* onPress={ShowProfile} */>
       <Image
         style={styles.img}
         source={{
-          uri: userReplied.information.image,
+          uri: /* userReplied.information.image */ img,
         }}
       />
       <View style={styles.textView}>
         <Text style={styles.titleText} numberOfLines={1}>
-          {userReplied.information.fulName}
+          {/* userReplied.information.fulName */ name}
         </Text>
         <Text style={styles.contentText}>{content}</Text>
         <View>
@@ -61,7 +70,7 @@ export default function ReplyItems(props) {
         </View>
       </View>
       <View style={styles.rightSideView}>
-        <Text style={styles.rightSideText}>{getTime()}</Text>
+        <Text style={styles.rightSideText}>{/* getTime() */dateReply}</Text>
       </View>
     </TouchableOpacity>
   );

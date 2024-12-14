@@ -1,280 +1,134 @@
-import React, {useEffect, useState} from 'react';
-import {Text, View, Image, TouchableOpacity, StyleSheet, Dimensions} from 'react-native';
-import {images, icons, colors, fontSizes} from '../../constants/index';
-import {UIHeader, TextInputTransparent} from '../../components';
+import React, {useState} from 'react';
 import {
-  user_register,
-  user_createAccountData,
-  information_initialize,
-} from '../../api';
-//import { RadioButton } from "react-native-paper";
-//import { ProgressSteps, ProgressStep } from "react-native-progress-steps";
-import ProgressSteps, {
-  Title,
-  Content,
-} from '@joaosousa/react-native-progress-steps';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {user_checkInfo} from '../../api/AuthScreens/user_register';
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Button,
+  StyleSheet,
+} from 'react-native';
+import {images, icons, colors, fontSizes} from '../../constants';
+import {UIHeader, TextInputTransparent} from '../../components';
+//
+import axios from 'axios';
+import {EnterMessageBar} from '../../components';
+const URL = 'http://192.168.132.41:3000';
 
 export default Registration = props => {
   const {navigate, goBack} = props.navigation;
-  const {width, height} = Dimensions.get('window');
-  const [currentStep, setCurrentStep] = useState(0);
 
-  //basic info
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rePassword, setRePassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  //newUser & OTP
-  const [newUser, setNewUser] = useState('');
-  const [systemOTP, setSystemOTP] = useState('');
-  const [inputOTP, setInputOTP] = useState('');
-  const [infoID, setInfoID] = useState('');
+  const [otp, setOtp] = useState('');
 
-  //additional info
-  const [gender, setGender] = useState('Nam');
-  const [phoneNumber, setPhoneNumber] = useState('00000000000');
-  const [yearOfBirth, setYearOfBirth] = useState('0000');
-  const [description, setDescription] = useState('Giới thiệu về bạn ...');
-  const [jwtToken, setJwtToken] = useState(null);
+  const [stepOTP, setStepOTP] = useState(false);
 
-  //use for api
   const handleRegister = async () => {
-    /* 
-    if ((await user_checkInfo(username, password, email, rePassword)) == true) {
-      setCurrentStep(1);
-      const result = await user_register(username, password, email, rePassword);
-      if (result) {
-        setNewUser(result.newUser);
-        setSystemOTP(result.otp);
-      }
-    } */
-    setCurrentStep(1);
+    if (!username || !email || !password || !confirmPassword)
+      return alert('error');
+    if (password !== confirmPassword) return alert('Passwords do not match');
+    try {
+      console.log('http://192.168.132.41:3000/register', {
+        username,
+        email,
+        password,
+      });
+      await axios.post('http://192.168.132.41:3000/register', {
+        username,
+        email,
+        password,
+      });
+      setStepOTP(true);
+    } catch (error) {
+      alert('Error during registration');
+      console.log(error);
+    }
   };
 
-  //use for api: Registration
-  const handleVerification_Registration = async () => {
-    /* alert(
-      `Registration: otp từ hệ thống: ${systemOTP}, từ màn hình: ${inputOTP},`
-    );
-    if (systemOTP == inputOTP) {
-      const dataResponse = await user_createAccountData(newUser);
-      if (dataResponse.status == 200 && dataResponse.data.jwtToken != null) {
-        setJwtToken(dataResponse.data.jwtToken);
-        setInfoID(dataResponse.data.infoID);
-        setCurrentStep(2);
-      } else {
-        //unsuccessful
-        alert("Đã có lỗi xảy ra, vui lòng thử lại");
-      }
-    } else {
-      //alert("OTP không đúng");
-    } */
-    setCurrentStep(2);
-  };
-
-  const handleNextStep = () => {
-    setCurrentStep(currentStep + 1);
-  };
-  const handlePrevStep = () => {
-    setCurrentStep(currentStep - 1);
+  const handleVerifyOtp = async () => {
+    try {
+      await axios.post('http://192.168.132.41:3000/verify-otp', {
+        username,
+        otp,
+      });
+      goBack();
+    } catch (error) {
+      alert('Invalid OTP');
+    }
   };
 
   return (
     <View style={styles.container}>
-    <Image
-      source={images.background}
-      style={[
-        {
-          width: width,
-          height: height,
-        },
-        styles.background,
-      ]}
-    />
-
-      <View style={styles.mainView}>
-        <ProgressSteps
-          currentStep={currentStep}
-          steps={[
-            {
-              id: 1,
-              title: <Title>Thông tin tài khoản</Title>,
-              content: (
-                <Content>
-                  <TextInputTransparent
-                    inputMode={'text'}
-                    icon={icons.personIcon}
-                    placeholder={'Username'}
-                    onChangeText={text => setUsername(text)}
-                  />
-                  <TextInputTransparent
-                    inputMode={'email'}
-                    icon={icons.emailIcon}
-                    placeholder={'Email'}
-                    onChangeText={text => setEmail(text)}
-                  />
-                  <TextInputTransparent
-                    inputMode={'text'}
-                    icon={icons.keyIcon}
-                    placeholder={'Password'}
-                    isPassword={true}
-                    onChangeText={text => setPassword(text)}
-                  />
-                  <TextInputTransparent
-                    inputMode={'text'}
-                    icon={icons.addKeyIcon}
-                    placeholder={'Re-enter Password'}
-                    isPassword={true}
-                    onChangeText={text => setRePassword(text)}
-                  />
-                  <View style={styles.handleStepRow}>
-                    <View />
-                    <TouchableOpacity
-                      onPress={() => {
-                        //handleRegister();
-                        handleNextStep();
-                      }}>
-                      <Text
-                        style={[styles.handleStepButtonText, styles.redText]}>
-                        Đăng Ký
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </Content>
-              ),
-            },
-            {
-              id: 2,
-              title: <Title>Xác thực OTP</Title>,
-              content: (
-                <Content>
-                  <TextInputTransparent
-                    inputMode={'text'}
-                    icon={icons.emailCheckMarkIcon}
-                    placeholder={'Nhập mã xác thực'}
-                    isPassword={true}
-                    onChangeText={number => setInputOTP(number)}
-                  />
-                  <View style={styles.handleStepRow}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        handlePrevStep();
-                      }}>
-                      <Text style={styles.handleStepButtonText}>Quay Lại</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => {
-                        //handleVerification_Registration()
-                        handleNextStep();
-                      }}>
-                      <Text
-                        style={[styles.handleStepButtonText, styles.redText]}>
-                        Tiếp Theo
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </Content>
-              ),
-            },
-            {
-              id: 3,
-              title: <Title>Thông tin thêm: Giới tính</Title>,
-              content: (
-                <Content>
-                  <TextInputTransparent
-                    inputMode={'text'}
-                    icon={icons.genderEqualityIcon}
-                    placeholder={'Nhập giới tính'}
-                    onChangeText={gender => setGender(gender)}
-                  />
-                  <View style={styles.handleStepRow}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        handlePrevStep();
-                      }}>
-                      <Text style={styles.handleStepButtonText}>Quay Lại</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => {
-                        handleNextStep();
-                      }}>
-                      <Text
-                        style={[styles.handleStepButtonText, styles.redText]}>
-                        Tiếp Theo
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </Content>
-              ),
-            },
-            {
-              id: 4,
-              title: <Title>Thông tin thêm: Số Điện Thoại</Title>,
-              content: (
-                <Content>
-                  <TextInputTransparent
-                    inputMode={'numeric'}
-                    icon={icons.phoneIcon}
-                    placeholder={'Nhập số điện thoại'}
-                    onChangeText={number => setPhoneNumber(number)}
-                  />
-                  <View style={styles.handleStepRow}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        handlePrevStep();
-                      }}>
-                      <Text style={styles.handleStepButtonText}>Quay Lại</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => {
-                        handleNextStep();
-                      }}>
-                      <Text
-                        style={[styles.handleStepButtonText, styles.redText]}>
-                        Tiếp Theo
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </Content>
-              ),
-            },
-            {
-              id: 5,
-              title: <Title>Thông tin thêm: Năm Sinh</Title>,
-              content: (
-                <Content>
-                  <TextInputTransparent
-                    inputMode={'numeric'}
-                    icon={icons.birthdayCakeIcon}
-                    placeholder={'Nhập năm sinh'}
-                    onChangeText={number => setYearOfBirth(number)}
-                  />
-                  <View style={styles.handleStepRow}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        handlePrevStep();
-                      }}>
-                      <Text style={styles.handleStepButtonText}>Quay Lại</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => {
-                        goBack();
-                      }}>
-                      <Text
-                        style={[styles.handleStepButtonText, styles.redText]}>
-                        Hoàn tất
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </Content>
-              ),
-            },
-          ]}
-        />
-      </View>
+      {!stepOTP ? (
+        <View style={styles.mainView}>
+          <TextInputTransparent
+            inputMode={'text'}
+            icon={icons.personIcon}
+            placeholder={'Username'}
+            onChangeText={setUsername}
+            value={username}
+          />
+          <TextInputTransparent
+            inputMode={'email'}
+            icon={icons.emailIcon}
+            placeholder={'Email'}
+            onChangeText={setEmail}
+            value={email}
+          />
+          <TextInputTransparent
+            inputMode={'text'}
+            icon={icons.keyIcon}
+            placeholder={'Password'}
+            isPassword={true}
+            onChangeText={setPassword}
+            value={password}
+          />
+          <TextInputTransparent
+            inputMode={'text'}
+            icon={icons.addKeyIcon}
+            placeholder={'Re-enter Password'}
+            isPassword={true}
+            onChangeText={setConfirmPassword}
+            value={confirmPassword}
+          />
+          <View style={styles.handleStepRow}>
+            <View />
+            <TouchableOpacity
+              onPress={() => {
+                handleRegister();
+              }}>
+              <Text style={[styles.handleStepButtonText, styles.redText]}>
+                Đăng Ký
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      ) : (
+        <View style={styles.mainView}>
+          <TextInputTransparent
+            inputMode={'numeric'}
+            icon={icons.addKeyIcon}
+            placeholder={'Enter OTP'}
+            isPassword={true}
+            onChangeText={setOtp}
+            value={otp}
+          />
+          <View style={styles.handleStepRow}>
+            <View />
+            <TouchableOpacity
+              onPress={() => {
+                handleVerifyOtp();
+              }}>
+              <Text style={[styles.handleStepButtonText, styles.redText]}>
+                Xác thực OTP
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
 
       <UIHeader
         title={null}
@@ -292,27 +146,26 @@ export default Registration = props => {
 };
 
 const styles = StyleSheet.create({
+  input: {borderWidth: 1, marginBottom: 10, padding: 8},
   container: {
     flex: 1,
     backgroundColor: colors.PrimaryContainer,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   background: {
     position: 'absolute',
   },
   mainView: {
-    flex: 1,
-    position: 'absolute',
-    bottom: 0,
-    top: '10%',
-    left: 1,
-    right: 1,
-    paddingTop: '5%',
-    paddingHorizontal: '5%',
-    borderColor: colors.transparentWhite,
-    borderWidth: 2,
-    borderTopEndRadius: 50,
-    borderTopStartRadius: 50,
+    width: '90%',
+    padding: 15,
     backgroundColor: colors.transparentWhite,
+    borderColor: colors.PrimaryOnContainerAndFixed,
+    borderWidth: 2,
+    borderRadius: 50,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   handleStepRow: {
     justifyContent: 'space-between',

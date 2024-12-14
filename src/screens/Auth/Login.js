@@ -7,13 +7,12 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Alert,
 } from 'react-native';
 import {images, icons, colors, fontSizes} from '../../constants/index';
-import {
-  MiddleSingleMediumButton,
-  TextInputTransparent,
-} from '../../components';
+import {MiddleSingleMediumButton, TextInputTransparent} from '../../components';
 import {user_login} from '../../api';
+import axios from 'axios';
 
 export default Login = props => {
   const {navigate, goBack, push} = props.navigation;
@@ -21,11 +20,19 @@ export default Login = props => {
   //Login component and function, use for api
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const handleLogin = () => {
-    push('UserProfile');
-    /* user_login(username, password, () =>
+  const handleLogin = async () => {
+    if (!username || !password) return alert('Hãy nhập Tài Khoản và Mật Khẩu');
+    //push('MainBottomTab');
+    /*  user_login(username, password, () =>
       push("MainBottomTab", { tabName: "UserProfile" })
     ); */
+    try {
+      await axios.post('http://192.168.132.41:3000/login', {username, password});
+      push('GameTab');
+    } catch (error) {
+      console.log(error)
+      alert('Invalid username or password');
+    }
   };
 
   return (
@@ -93,10 +100,10 @@ const styles = StyleSheet.create({
   mainView: {
     flex: 1,
     position: 'absolute',
-    bottom:0,
+    bottom: 0,
     top: '33%',
-    left:1,
-    right:1,
+    left: 1,
+    right: 1,
     paddingTop: 40,
     borderColor: colors.transparentWhite,
     borderWidth: 2,

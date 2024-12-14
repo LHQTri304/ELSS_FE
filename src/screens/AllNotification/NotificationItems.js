@@ -11,13 +11,13 @@ import { Icon } from "../../components";
 import { notifications_checkNewByNotifycationID } from "../../api";
 
 function NotificationItems(props) {
-  const { header, notifycationType, content, dateSent, notifycationID } =
+  const { header, notificationType, content, dateSent, notifycationID } =
     props.group;
   const dateSentNotification = new Date(dateSent);
   const { onPress } = props;
 
   const [isNewNotification, setIsNewNotification] = useState(false);
-  useEffect(() => {
+  /* useEffect(() => {
     const fetchNewNotification = async () => {
       const isNew = await notifications_checkNewByNotifycationID(
         notifycationID
@@ -26,7 +26,7 @@ function NotificationItems(props) {
     };
 
     fetchNewNotification();
-  }, [notifycationID]);
+  }, [notifycationID]); */
 
   const handlePress = () => {
     setIsNewNotification(false);
@@ -37,9 +37,10 @@ function NotificationItems(props) {
     <TouchableOpacity onPress={handlePress} style={styles.container}>
       <Icon
         name={
-          notifycationType === "admin"
+          /* notificationType === "system"
             ? icons.globeIcon
-            : icons.personCircleIcon
+            : icons.personCircleIcon */
+            icons.activeBellAlarm
         }
         size={33}
         color={colors.active}
@@ -58,9 +59,12 @@ function NotificationItems(props) {
           {content}
         </Text>
       </View>
-      <Text style={isNewNotification ? styles.activeTimeText : styles.timeText}>
+      {/* <Text style={isNewNotification ? styles.activeTimeText : styles.timeText}>
         {dateSentNotification.getHours()}:{dateSentNotification.getMinutes()}{" "}
         {dateSentNotification.getDate()}/{dateSentNotification.getMonth() + 1}
+      </Text> */}
+      <Text style={isNewNotification ? styles.activeTimeText : styles.timeText}>
+        {dateSent}
       </Text>
     </TouchableOpacity>
   );

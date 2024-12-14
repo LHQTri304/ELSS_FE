@@ -10,7 +10,6 @@ import TabMessenger from "./Tabs/TabMessenger";
 import TabDiscussion from "./Tabs/TabDiscussion";
 import TabSubject from "./Tabs/TabSubject";
 import TabNotification from "./Tabs/TabNotification";
-import TabDocument from "./Tabs/TabDocument";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -63,18 +62,18 @@ const ScreenOptions = ({ route }) => ({
 });
 
 function MessengerGroup(props) {
-  const [group, setGroup] = useState("");
-  //navigation
   const { navigate, goBack } = props.navigation;
+  const [group, setGroup] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
+    /* const fetchData = async () => {
       const groupID = await AsyncStorage.getItem("groupID");
       const response = await group_findGroupById(groupID);
       setGroup(response.data);
-    };
+    }; */
+    setGroup(props.route.params.group);
 
-    fetchData();
+    //fetchData();
   }, [props.userName]);
 
   const ShowGroupInfo = async () => {
@@ -106,9 +105,8 @@ function MessengerGroup(props) {
         >
           <Tab.Screen name="TabMessenger" component={TabMessenger} />
           <Tab.Screen name="TabDiscussion" component={TabDiscussion} />
-          <Tab.Screen name="TabSubject" component={TabSubject} />
-          <Tab.Screen name="TabNotification" component={TabNotification} />
-          <Tab.Screen name="TabDocument" component={TabDocument} />
+          {/* <Tab.Screen name="TabSubject" component={TabSubject} /> */}
+          {/* <Tab.Screen name="TabNotification" component={TabNotification} /> */}
         </Tab.Navigator>
       </View>
     </View>

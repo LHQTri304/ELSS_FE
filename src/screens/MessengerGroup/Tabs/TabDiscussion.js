@@ -6,15 +6,17 @@ import TabDiscussionItems from "./TabDiscussionItems";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { group_getAllBlog } from "../../../api";
 
+import { dataBlogs } from "../../../testFE";
+
 export default function TabDiscussion(props) {
-  const [topics, setTopics] = useState([]);
+  const [topics, setTopics] = useState(dataBlogs);
   const [searchText, setSearchText] = useState("");
   const [username, setUsername] = useState("");
 
   //navigation
   const { navigate, goBack } = props.navigation;
 
-  useEffect(() => {
+  /* useEffect(() => {
     const fetchData = async () => {
       setUsername(AsyncStorage.getItem("username").toString());
 
@@ -25,7 +27,7 @@ export default function TabDiscussion(props) {
     fetchData();
     const intervalId = setInterval(fetchData, 3000);
     return () => clearInterval(intervalId);
-  }, [props.userName, username]);
+  }, [props.userName, username]); */
 
   return (
     <View style={styles.container}>
@@ -38,7 +40,7 @@ export default function TabDiscussion(props) {
       <ScrollView style={styles.listContainer}>
         {topics
           .filter((eachTopic) =>
-            eachTopic.content.toLowerCase().includes(searchText.toLowerCase())
+            eachTopic/* .content */.header.toLowerCase().includes(searchText.toLowerCase())
           )
           .map((eachTopic) => (
             <TabDiscussionItems

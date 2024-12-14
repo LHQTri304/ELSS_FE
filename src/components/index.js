@@ -26,6 +26,9 @@ import { LoadingFullScreen } from "./MyLoadingScreen";
 ///
 import { MiddleSingleMediumButton } from "./Buttons";
 
+//
+import EnterMessageBar from "./EnterMessageBar";
+
 
 export {
   MiddleSingleMediumButton,
@@ -59,4 +62,7 @@ export {
   Dropdown,
   //
   LoadingFullScreen,
+  //
+  //
+  EnterMessageBar,
 };

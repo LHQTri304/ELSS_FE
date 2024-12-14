@@ -8,10 +8,11 @@ import {
 } from "../api";
 
 import { LoadingFullScreen } from "./MyLoadingScreen";
+import { projectRoot } from "../../metro.config";
 
 export default function MessengerItems(props) {
-  const { content, dateSent, id, status } = props.item;
-  const files = props.item.files;
+  const { latestMessage: content, timeSend : dateSent, id, status } = props.item;
+  const files = [];//props.item.files;
 
   //Dùng kind để phân biệt giữa chat-user và chat-group
   //chat-user: "user" hoặc bỏ trống
@@ -26,8 +27,8 @@ export default function MessengerItems(props) {
     date.getMonth() + 1
   }`;
 
-  const blueText =
-    kind === "group" ? `${user.information.fulName} | ` + timeSent : timeSent;
+  const blueText = `${props.item.fulName} | ${dateSent}`
+    //kind === "group" ? `${user.information.fulName} | ` + timeSent : timeSent;
 
   const [isLoading, setIsLoading] = useState(true);
   const [avatar, setAvatar] = useState(null);
@@ -45,13 +46,13 @@ export default function MessengerItems(props) {
   };
 
   const getContainerStyle = () => {
-    return sender == sentUsername
+    return sender //== sentUsername
       ? styles.senderContainer
       : styles.notSenderContainer;
   };
 
   const getContentStyle = () => {
-    return sender == sentUsername
+    return sender //== sentUsername
       ? styles.senderContent
       : styles.notSenderContent;
   };
@@ -65,7 +66,7 @@ export default function MessengerItems(props) {
 
   const fetchData = async () => {
     try {
-      const responseData =
+      /* const responseData =
         kind === "group"
           ? await messagegroup_getSentUserInGroup(id)
           : await messageuser_getSentUser(id);
@@ -73,7 +74,10 @@ export default function MessengerItems(props) {
       setSentUsername(responseData.userName);
       //
       const checkSenderResponseData = await messageuser_checkSender();
-      setSender(checkSenderResponseData);
+      setSender(checkSenderResponseData); */
+      setAvatar(props.item.image);
+      setSentUsername(props.item.fulName);
+      setSender(Math.random() < 0.5);
       //
       setIsLoading(false);
     } catch (error) {

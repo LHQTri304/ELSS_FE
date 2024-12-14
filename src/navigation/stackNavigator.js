@@ -12,6 +12,15 @@ import {
   SettingProfile,
   Friends,
   GroupChat,
+  AllNotification,
+  MessengerGroup,
+  ShowPost,
+  Comment,
+  Reply,
+  //
+  GameTab,
+  GamePicWord,
+  GameWordSort,
 } from '../screens';
 import MainBottomTab from './MainBottomTab';
 
@@ -21,7 +30,7 @@ export default function StackNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="MainBottomTab"
+        initialRouteName="GameTab"
         screenOptions={{
           headerShown: false,
         }}>
@@ -42,6 +51,18 @@ export default function StackNavigator() {
 
         <Stack.Screen name="Friends" component={Friends} />
         <Stack.Screen name="GroupChat" component={GroupChat} />
+        <Stack.Screen name="AllNotification" component={AllNotification} />
+
+        <Stack.Screen name="MessengerGroup" component={MessengerGroup} />
+        <Stack.Screen name="ShowPost" component={ShowPost} />
+        <Stack.Screen name="Comment" component={Comment} />
+        <Stack.Screen name="Reply" component={Reply} />
+
+
+
+        <Stack.Screen name="GameTab" component={GameTab} />
+        <Stack.Screen name="GamePicWord" component={GamePicWord} />
+        <Stack.Screen name="GameWordSort" component={GameWordSort} />
       </Stack.Navigator>
     </NavigationContainer>
   );

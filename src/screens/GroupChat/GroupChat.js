@@ -25,7 +25,7 @@ const tabBarLabelStyles = {
 function GroupChat(props) {
   return (
     <View style={styles.container}>
-      <UIHeader title={"Nhóm học tập"} />
+      <UIHeader title={"Nhóm "} />
       <View style={styles.displayView}>
         <Tab.Navigator
           initialRouteName="TabYourGroups"

@@ -20,7 +20,7 @@ import {
 } from "../../components";
 import { API_BASE_URL } from "../../api/DomainAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import SockJS from "sockjs-client";
+//import SockJS from "sockjs-client";
 import { over } from "stompjs";
 import { messenger_getFriendID, messenger_loadMessageforUser } from "../../api";
 
@@ -31,9 +31,9 @@ export default function Messenger(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [chatHistory, setChatHistory] = useState([]);
   const [friendID, setFriendID] = useState(null);
-  const [socket, setSocket] = useState(new SockJS(API_BASE_URL + "/ws"));
+  //const [socket, setSocket] = useState(new SockJS(API_BASE_URL + "/ws"));
 
-  let stompClient = over(socket);
+  /* let stompClient = over(socket);
 
   const fetchData = async () => {
     try {
@@ -59,7 +59,7 @@ export default function Messenger(props) {
       "/user/private/queue/chat/" + getFriendIDResponse.data,
       onReceivedMessage
     );
-  };
+  }; */
 
   const onError = async () => {
     alert("Error");
@@ -113,7 +113,7 @@ export default function Messenger(props) {
         <EnterMessageBar
           myUsername={myUsername}
           friendUsername={friendUsername}
-          stompClient={stompClient}
+          //stompClient={stompClient}
           friendID={friendID}
           actionType={"friend"}
         />

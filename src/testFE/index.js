@@ -1,7 +1,13 @@
-import dataFriends from "./dataFriends";
-import dataGroups from "./dataGroups";
-
+import dataFriends from './dataFriends';
+import dataGroups from './dataGroups';
+import dataNotifications from './dataNotifications';
+import dataBlogs from './dataBlogs';
+import dataNounVocabulary from './dataNounVocabulary';
 
 export {
-    dataFriends,dataGroups,
+  dataFriends,
+  dataGroups,
+  dataNotifications,
+  dataBlogs,
+  dataNounVocabulary,
 };

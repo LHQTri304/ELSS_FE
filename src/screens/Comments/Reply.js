@@ -13,10 +13,18 @@ import { UIHeader, EnterMessageBar } from "../../components";
 import { blog_getAllReplyInComment } from "../../api";
 
 const Reply = (props) => {
-  const [replies, setReplies] = useState([]);
+  //const [replies, setReplies] = useState([]);
 
-  const { commentID, userComment, content, files } = props.route.params.comment;
+  //const { commentID, userComment, content, files } = props.route.params.comment;
   const { navigate, goBack } = props.navigation;
+
+  //
+  const [img, setI] = useState(props.route.params.comment.img);
+  const [name, setN] = useState(props.route.params.comment.userName);
+  const [content, setCD] = useState(props.route.params.comment.content);
+  const [replies, setReplies] = useState(props.route.params.comment.replies);
+  const [files, setFF] = useState([]);
+  //
 
   const MAXWidth = 245;
   const getWidth = (baseWidth) => {
@@ -28,7 +36,7 @@ const Reply = (props) => {
       : baseHeight;
   };
 
-  useEffect(() => {
+  /* useEffect(() => {
     fetchData();
     const intervalId = setInterval(fetchData, 3000);
     return () => clearInterval(intervalId);
@@ -49,7 +57,7 @@ const Reply = (props) => {
 
   const handleShowPicture = () => {
     navigate("ShowPicture", { files: files });
-  };
+  }; */
 
   return (
     <View style={styles.container}>
@@ -67,17 +75,17 @@ const Reply = (props) => {
       <ScrollView style={styles.listContainer}>
         <TouchableOpacity
           style={styles.mainCommentContainer}
-          onPress={ShowProfile}
+          /* onPress={ShowProfile} */
         >
           <Image
             style={styles.img}
             source={{
-              uri: userComment.information.image,
+              uri: /* userComment.information.image */img,
             }}
           />
           <View style={styles.textView}>
             <Text style={styles.titleText} numberOfLines={1}>
-              {userComment.information.fulName}
+              {/* userComment.information.fulName */name}
             </Text>
             <Text style={styles.contentText}>{content}</Text>
             <View>
@@ -102,13 +110,13 @@ const Reply = (props) => {
         {replies.map((eachReply) => (
           <ReplyItems
             reply={eachReply}
-            key={eachReply.replyID}
+            //key={eachReply.replyID}
             navigate={navigate}
           />
         ))}
       </ScrollView>
 
-      <EnterMessageBar commentID={commentID} actionType={"reply"} />
+      <EnterMessageBar /* commentID={commentID} actionType={"reply"} */ />
     </View>
   );
 };
